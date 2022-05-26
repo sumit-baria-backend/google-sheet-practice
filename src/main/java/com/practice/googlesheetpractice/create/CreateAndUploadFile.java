@@ -49,15 +49,10 @@ public class CreateAndUploadFile {
         FileContent fileContent = new FileContent("text/csv", filePathTemp);
 
         try{
-            GeneratedIds ids = googleDriveManager.getInstance().files().generateIds().setCount(1).execute();
-//            File fileTemp ;
-//            if(googleDriveManager.getInstance().files().get(ids.getIds().get(0)).execute() == null){
-//                 fileTemp = googleDriveManager.getInstance().files().create(fileMetadata, fileContent).setFields("id").execute();
-//            } else {
-//                 fileTemp = googleDriveManager.getInstance().files().update(ids.getIds().get(0), fileMetadata, fileContent).setFields("id").execute();
-//            }
-            String fileId = "1j3iwmMylMMEHXCIXOzgcUh4gV-VWvvkm9zuEIT1VONo";
-            File fileTemp = googleDriveManager.getInstance().files().update(fileId, fileMetadata, fileContent).setFields("id").execute();
+            File fileTemp =  googleDriveManager.getInstance().files().create(fileMetadata, fileContent).setFields("id").execute();
+//
+//            String fileId = "1j3iwmMylMMEHXCIXOzgcUh4gV-VWvvkm9zuEIT1VONo";
+//            File fileTemp = googleDriveManager.getInstance().files().update(fileId, fileMetadata, fileContent).setFields("id").execute();
             System.out.println("id of created file" + fileTemp.getId());
             googleDriveManager.getInstance().permissions().create(fileTemp.getId(), new Permission().setType("anyone").setRole("reader")).execute();
             System.out.println(fileTemp.getPermissions() + " " + fileTemp.getId());
@@ -68,6 +63,4 @@ public class CreateAndUploadFile {
             return e.getMessage();
         }
     }
-
-
 }
